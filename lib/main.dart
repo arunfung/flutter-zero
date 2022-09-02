@@ -8,32 +8,33 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.green
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Arun fung'),
-        ),
-        body: const Greeting(),
-      ),
+      theme: ThemeData(primarySwatch: Colors.green),
+      home: const Home(),
     );
   }
-  
 }
 
-class Greeting extends StatelessWidget
-{
-  const Greeting({super.key});
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-    child: Text(
-      "hello arun1", 
-      textDirection: TextDirection.rtl,
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Arun fung'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Text('你点击的次数：'),
+              Text(
+                '0',
+                style: TextStyle(fontSize: 50),
+              ),
+            ],
+          ),
+        ));
   }
 }
 
