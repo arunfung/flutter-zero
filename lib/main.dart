@@ -1,7 +1,19 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() => runApp(App());
+
+class App extends StatelessWidget
+{
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+    child: Text(
+      "hello arun1", 
+      textDirection: TextDirection.rtl,
+      ),
+    );
+  }
+
 }
 
 class MyApp extends StatelessWidget {
