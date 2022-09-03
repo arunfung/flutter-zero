@@ -8,37 +8,53 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Flutter arun',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const Home(),
+      home: const HomePage(title: 'Flutter Arun Home Page'),
     );
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<StatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int _counter = 10;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Arun fung'),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('你点击的次数：'),
+          children: <Widget>[
+            const Text('你点击的次数：'),
             Text(
-              '0',
-              style: TextStyle(fontSize: 50),
+              '$_counter',
+              // style: const TextStyle(fontSize: 50),
+              style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          debugPrint('Clicked...');
-        },
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
     );
