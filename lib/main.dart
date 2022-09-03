@@ -8,9 +8,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter arun',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const HomePage(title: 'Flutter Arun Home Page'),
+      home: const DefaultTabController(
+          length: 2, child: HomePage(title: 'Flutter Arun Home Page')),
     );
   }
 }
@@ -43,25 +45,38 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: const Icon(Icons.menu), onPressed: () => {},),
-        title: Image.asset(getIcon('avatar.png'), width: 40,),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () => {},
+        ),
+        title: Image.asset(
+          getIcon('avatar.png'),
+          width: 40,
+        ),
         actions: [
           IconButton(onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
         ],
+        bottom: const TabBar(tabs: [
+          Tab(text: '人文'),
+          Tab(text: '科技'),
+        ]),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('你点击的次数：'),
-            Text(
-              '$_counter',
-              // style: const TextStyle(fontSize: 50),
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      body: TabBarView(children: [
+        const Icon(Icons.book),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('你点击的次数：'),
+              Text(
+                '$_counter',
+                // style: const TextStyle(fontSize: 50),
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ],
+          ),
         ),
-      ),
+      ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
