@@ -30,6 +30,47 @@ class _HomePageState extends State<HomePage> {
   int _currentBottomNavigationBarIndex = 0;
   int _counter = 10;
 
+  var pages = [
+    TabBarView(children: [
+      const Icon(Icons.explore_outlined),
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Text('头条：'),
+            // Text(
+            //   '$_counter',
+              // style: const TextStyle(fontSize: 50),
+              // style: Theme.of(context).textTheme.headline4,
+            // ),
+          ],
+        ),
+      ),
+    ]),
+    TabBarView(children: [
+      const Icon(Icons.collections),
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Text('收藏：'),
+          ],
+        ),
+      ),
+    ]),
+    TabBarView(children: [
+      const Icon(Icons.person),
+      Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Text('我：'),
+          ],
+        ),
+      ),
+    ]),
+  ];
+
   void _onTabBottomNavigationBar(int index) {
     setState(() {
       _currentBottomNavigationBarIndex = index;
@@ -48,10 +89,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+  dynamic showAppBar() {
+    return _currentBottomNavigationBarIndex == 0 ? AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu),
           onPressed: () => {},
@@ -67,23 +106,22 @@ class _HomePageState extends State<HomePage> {
           Tab(text: '人文'),
           Tab(text: '科技'),
         ]),
-      ),
-      body: TabBarView(children: [
-        const Icon(Icons.book),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('你点击的次数：'),
-              Text(
-                '$_counter',
-                // style: const TextStyle(fontSize: 50),
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ],
-          ),
-        ),
-      ]),
+      ) : null;
+  }
+
+  dynamic showFloatingActionButton() {
+    return _currentBottomNavigationBarIndex == 2 ? FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ) : null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: showAppBar(),
+      body: pages[_currentBottomNavigationBarIndex],
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentBottomNavigationBarIndex,
           onTap: _onTabBottomNavigationBar,
@@ -93,11 +131,7 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(label: '收藏', icon: Icon(Icons.collections)),
             BottomNavigationBarItem(label: '我', icon: Icon(Icons.person)),
           ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: showFloatingActionButton(),
     );
   }
 }
