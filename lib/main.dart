@@ -27,7 +27,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentBottomNavigationBarIndex = 0;
   int _counter = 10;
+
+  void _onTabBottomNavigationBar(int index) {
+    setState(() {
+      _currentBottomNavigationBarIndex = index;
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -77,6 +84,15 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ]),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentBottomNavigationBarIndex,
+          onTap: _onTabBottomNavigationBar,
+          items: const [
+            BottomNavigationBarItem(
+                label: '头条', icon: Icon(Icons.explore_outlined)),
+            BottomNavigationBarItem(label: '收藏', icon: Icon(Icons.collections)),
+            BottomNavigationBarItem(label: '我', icon: Icon(Icons.person)),
+          ]),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
