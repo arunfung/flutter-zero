@@ -40,8 +40,8 @@ class _HomePageState extends State<HomePage> {
             Text('头条：'),
             // Text(
             //   '$_counter',
-              // style: const TextStyle(fontSize: 50),
-              // style: Theme.of(context).textTheme.headline4,
+            // style: const TextStyle(fontSize: 50),
+            // style: Theme.of(context).textTheme.headline4,
             // ),
           ],
         ),
@@ -90,31 +90,50 @@ class _HomePageState extends State<HomePage> {
   }
 
   dynamic showAppBar() {
-    return _currentBottomNavigationBarIndex == 0 ? AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          onPressed: () => {},
-        ),
-        title: Image.asset(
-          getIcon('avatar.png'),
-          width: 40,
-        ),
-        actions: [
-          IconButton(onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
-        ],
-        bottom: const TabBar(tabs: [
-          Tab(text: '人文'),
-          Tab(text: '科技'),
-        ]),
-      ) : null;
+    return _currentBottomNavigationBarIndex == 0
+        ? AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.menu),
+              onPressed: () => {},
+            ),
+            title: Image.asset(
+              getIcon('avatar.png'),
+              width: 40,
+            ),
+            actions: [
+              IconButton(
+                  onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
+            ],
+            bottom: const TabBar(tabs: [
+              Tab(text: '人文'),
+              Tab(text: '科技'),
+            ]),
+          )
+        : null;
+  }
+
+  dynamic showBottomNavigationBar() {
+    return BottomNavigationBar(
+        currentIndex: _currentBottomNavigationBarIndex,
+        onTap: _onTabBottomNavigationBar,
+        items: const [
+          BottomNavigationBarItem(
+              label: '头条', icon: Icon(Icons.explore_outlined)),
+          BottomNavigationBarItem(label: '收藏', icon: Icon(Icons.collections)),
+          BottomNavigationBarItem(label: '我', icon: Icon(Icons.person)),
+        ]);
   }
 
   dynamic showFloatingActionButton() {
-    return _currentBottomNavigationBarIndex == 2 ? FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ) : null;
+    return _currentBottomNavigationBarIndex == 0
+        ? FloatingActionButton(
+            onPressed: _incrementCounter,
+            tooltip: 'Increment',
+            backgroundColor: Colors.yellow,
+            foregroundColor: Colors.black87,
+            child: const Icon(Icons.add_a_photo),
+          )
+        : null;
   }
 
   @override
@@ -122,16 +141,9 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentBottomNavigationBarIndex,
-          onTap: _onTabBottomNavigationBar,
-          items: const [
-            BottomNavigationBarItem(
-                label: '头条', icon: Icon(Icons.explore_outlined)),
-            BottomNavigationBarItem(label: '收藏', icon: Icon(Icons.collections)),
-            BottomNavigationBarItem(label: '我', icon: Icon(Icons.person)),
-          ]),
+      bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }
