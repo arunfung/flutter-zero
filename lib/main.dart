@@ -43,7 +43,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        leading: IconButton(icon: const Icon(Icons.menu), onPressed: () => {},),
+        title: Image.asset(getIcon('avatar.png'), width: 40,),
         actions: [
           IconButton(onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
         ],
@@ -68,4 +69,14 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+/// 获取图片全路径
+String getImg(String name) {
+  return 'assets/images/$name';
+}
+
+/// 获取 icon 全路径
+String getIcon(String name) {
+  return 'assets/icons/$name';
 }
