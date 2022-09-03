@@ -33,11 +33,20 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _resetCounter() {
+    setState(() {
+      _counter = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          IconButton(onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
+        ],
       ),
       body: Center(
         child: Column(
