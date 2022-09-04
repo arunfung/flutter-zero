@@ -79,6 +79,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _incrementCounter() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('成功！'),
+        duration: const Duration(seconds: 15),
+        action: SnackBarAction(
+          label: 'Close',
+          onPressed: () {},
+        ),
+        behavior: SnackBarBehavior.floating,
+      ),
+    );
     setState(() {
       _counter++;
     });
@@ -145,10 +156,10 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
-      drawer: const Drawer(child: Center(child:Text('text'))),
+      drawer: const Drawer(child: Center(child: Text('text'))),
       bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
