@@ -78,21 +78,20 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _incrementCounter() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('成功！'),
-        duration: const Duration(seconds: 15),
-        action: SnackBarAction(
-          label: 'Close',
-          onPressed: () {},
-        ),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-    setState(() {
-      _counter++;
-    });
+  void _incrementCounter() async {
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: const Text('成功！'),
+    //     duration: const Duration(seconds: 15),
+    //     action: SnackBarAction(
+    //       label: 'Close',
+    //       onPressed: () {},
+    //     ),
+    //     behavior: SnackBarBehavior.floating,
+    //   ),
+    // );
+    final result = await showAppDialog(context);
+    print(result);
   }
 
   void _resetCounter() {
@@ -166,6 +165,30 @@ class _HomePageState extends State<HomePage> {
             child: const Icon(Icons.add_a_photo),
           )
         : null;
+  }
+
+  Future<bool?> showAppDialog(context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('删除'),
+        content: const Text('确定要删除吗？'),
+        actions: [
+          TextButton(
+            child: const Text('确定'),
+            onPressed: () {
+              Navigator.pop(context, true);
+            },
+          ),
+          TextButton(
+            child: const Text('取消'),
+            onPressed: () {
+              Navigator.pop(context, false);
+            },
+          )
+        ],
+      ),
+    );
   }
 
   @override
