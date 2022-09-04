@@ -90,8 +90,11 @@ class _HomePageState extends State<HomePage> {
     //     behavior: SnackBarBehavior.floating,
     //   ),
     // );
-    final result = await showAppDialog(context);
-    print(result);
+    // final result = await showAppDialog(context);
+    // print(result);
+
+    // BottomSheet 区域显示隐藏
+    _showModalBottomSheet(context);
   }
 
   void _resetCounter() {
@@ -189,6 +192,26 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  dynamic _showModalBottomSheet(context) {
+    return showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return SizedBox(
+            height: 200,
+            child: Column(
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(Icons.close)),
+                const Text('你好'),
+              ],
+            ),
+          );
+        });
   }
 
   @override
