@@ -92,10 +92,10 @@ class _HomePageState extends State<HomePage> {
   dynamic showAppBar() {
     return _currentBottomNavigationBarIndex == 0
         ? AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () => {},
-            ),
+            // leading: IconButton(
+            //   icon: const Icon(Icons.menu),
+            //   onPressed: () => {},
+            // ),
             title: Image.asset(
               getIcon('avatar.png'),
               width: 40,
@@ -141,6 +141,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
+      drawer: const Drawer(child: Center(child: Text('text'))),
       bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
