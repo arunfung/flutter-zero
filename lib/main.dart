@@ -115,8 +115,26 @@ class _HomePageState extends State<HomePage> {
               width: 40,
             ),
             actions: [
-              IconButton(
-                  onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
+              // IconButton(
+              //     onPressed: _resetCounter, icon: const Icon(Icons.refresh)),
+              PopupMenuButton(
+                icon: const Icon(Icons.more_horiz),
+                offset: const Offset(-10, 50),
+                itemBuilder: (context) => [
+                  const PopupMenuItem(
+                    child: Text('登录'),
+                    value: 'login',
+                  ),
+                  const PopupMenuItem(
+                    child: Text('注册'),
+                    value: 'regist',
+                  ),
+                ],
+                onCanceled: () {},
+                onSelected: (value) {
+                  print(value);
+                },
+              )
             ],
             bottom: const TabBar(tabs: [
               Tab(text: '人文'),
