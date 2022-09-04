@@ -27,6 +27,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   int _currentBottomNavigationBarIndex = 0;
   int _counter = 10;
 
@@ -92,10 +93,12 @@ class _HomePageState extends State<HomePage> {
   dynamic showAppBar() {
     return _currentBottomNavigationBarIndex == 0
         ? AppBar(
-            // leading: IconButton(
-            //   icon: const Icon(Icons.menu),
-            //   onPressed: () => {},
-            // ),
+            leading: IconButton(
+              icon: const Icon(Icons.person),
+              onPressed: () => {
+                _scaffoldKey.currentState!.openDrawer(),
+              },
+            ),
             title: Image.asset(
               getIcon('avatar.png'),
               width: 40,
@@ -139,9 +142,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
-      drawer: const Drawer(child: Center(child: Text('text'))),
+      drawer: const Drawer(child: Center(child:Text('text'))),
       bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
