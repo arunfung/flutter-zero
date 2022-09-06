@@ -1,18 +1,17 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(Provider(
+void main() => runApp(ChangeNotifierProvider(
       create: (context) => Counter(),
       child: const App(),
     ));
 
-class Counter {
+class Counter extends ChangeNotifier {
   int number = 0;
 
   increment() {
     number++;
+    notifyListeners();
   }
 }
 
@@ -43,7 +42,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   int _currentBottomNavigationBarIndex = 0;
-  int _counter = 10;
 
   var pages = [
     TabBarView(children: [
@@ -111,12 +109,6 @@ class _HomePageState extends State<HomePage> {
     _showModalBottomSheet(context);
   }
 
-  void _resetCounter() {
-    setState(() {
-      _counter = 0;
-    });
-  }
-
   dynamic showAppBar() {
     return _currentBottomNavigationBarIndex == 0
         ? AppBar(
@@ -138,12 +130,12 @@ class _HomePageState extends State<HomePage> {
                 offset: const Offset(-10, 50),
                 itemBuilder: (context) => [
                   const PopupMenuItem(
-                    child: Text('登录'),
                     value: 'login',
+                    child: Text('登录'),
                   ),
                   const PopupMenuItem(
-                    child: Text('注册'),
                     value: 'regist',
+                    child: Text('注册'),
                   ),
                 ],
                 onCanceled: () {},
@@ -230,11 +222,26 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final counter = Provider.of<Counter>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
-      drawer: const Drawer(child: Center(child: Text('text'))),
+      drawer: Drawer(
+          child: Center(
+              child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text('您点击的次数'),
+          Text(counter.number.toString()),
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => {
+              counter.increment(),
+            },
+          ),
+        ],
+      ))),
       bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
