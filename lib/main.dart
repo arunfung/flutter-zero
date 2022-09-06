@@ -1,6 +1,20 @@
-import 'package:flutter/material.dart';
+import 'dart:js';
 
-void main() => runApp(const App());
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+void main() => runApp(Provider(
+      create: (context) => Counter(),
+      child: const App(),
+    ));
+
+class Counter {
+  int number = 0;
+
+  increment() {
+    number++;
+  }
+}
 
 class App extends StatelessWidget {
   const App({super.key});
