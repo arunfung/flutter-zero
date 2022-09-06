@@ -233,7 +233,12 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           const Text('您点击的次数'),
-          Text(counter.number.toString()),
+          Consumer<Counter>(builder: (context, data, child) {
+            return Text(
+              data.number.toString(),
+              style: Theme.of(context).textTheme.headline4,
+            );
+          }),
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () => {
