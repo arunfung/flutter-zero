@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:zero/providers/user.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-      create: (context) => Counter(),
+void main() => runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Counter()),
+        ChangeNotifierProvider(create: (context) => User()),
+      ],
       child: const App(),
     ));
 
@@ -220,33 +224,84 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
+  dynamic showDrawer() {
+    final counter = Provider.of<Counter>(context);
+    final user = Provider.of<User>(context);
+    return Drawer(
+      child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: const BoxDecoration(
+              color: Colors.green,
+            ),
+            child: Column(children: <Widget>[
+              const Text('Drawer Header'),
+              Text(user.name),
+            ]),
+          ),
+          ListTile(
+            title: const Text('您点击的次数:'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text(counter.number.toString()),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          IconButton(
+            padding: const EdgeInsets.all(0.0),
+            icon: const Icon(
+              Icons.add,
+              size: 10,
+            ),
+            iconSize: 10,
+            onPressed: () => {
+              counter.increment(),
+              user.login(),
+            },
+          ),
+        ],
+      ),
+      //     Center(
+      //         child: Column(
+      //   mainAxisAlignment: MainAxisAlignment.center,
+      //   children: <Widget>[
+      //     const Text('您点击的次数'),
+      //     Consumer<Counter>(builder: (context, data, child) {
+      //       return Text(
+      //         data.number.toString(),
+      //         style: Theme.of(context).textTheme.headline4,
+      //       );
+      //     }),
+      //     IconButton(
+      //       icon: const Icon(Icons.add),
+      //       onPressed: () => {
+      //         counter.increment(),
+      //       },
+      //     ),
+      //   ],
+      // ))
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final counter = Provider.of<Counter>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: showAppBar(),
       body: pages[_currentBottomNavigationBarIndex],
-      drawer: Drawer(
-          child: Center(
-              child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          const Text('您点击的次数'),
-          Consumer<Counter>(builder: (context, data, child) {
-            return Text(
-              data.number.toString(),
-              style: Theme.of(context).textTheme.headline4,
-            );
-          }),
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => {
-              counter.increment(),
-            },
-          ),
-        ],
-      ))),
+      drawer: showDrawer(),
       bottomNavigationBar: showBottomNavigationBar(),
       floatingActionButton: showFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
